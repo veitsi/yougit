@@ -1,45 +1,46 @@
-import json
-import urllib.request as ur
-import urllib.parse as par
+from helpers import *
 
 
 class Github_user:
     def __init__(self, login='yglukhov'):
         self.login = login
 
-    def get_info_by_rest(self):
+    def get_user_info_by_rest(self):
         url = 'https://api.github.com/users/' + self.login
-        html = ur.urlopen(url).read()
-        data = json.loads(html.decode('utf-8'))
-        if (data):
-            print(data['name'])
-
-            # print("The response contains {0} properties".format(len(data)))
-            # print("\n")
-            # for key in data:
-            #     print
-            #     key + " : " + data[key]
+        data = dict_from_rest(url)
+        # for key in data:
+        #     print(key, data[key])
 
 
 g = Github_user()
-g.get_info_by_rest()
+g.get_user_info_by_rest()
 
 
 class Repo:
-    prefix = 'https://github.com/'
 
-    def __init__(self, locator='nim-lang/Nim'):
+    def __init__(self, locator='yglukhov/nimx'):
         self.locator = locator
-        self.stars = None
-        self.contributors = None
-        self.commits = None
-        self.date = None
 
     def is_valid(self):
         return True
 
-    def get_full_path(self):
-        return Repo.prefix + self.locator
+    def get_repo_info(self):
+        url = 'https://api.github.com/repos/'\
+              + self.locator + '/commits'
+        # https://api.github.com/yglukhov/nimx as example
+        # curl -i "https://api.github.com/repos/show/nimx"
+        data=dict_from_rest(url)
+        print(data)
+        # for key in data:
+        #     print(key, data[key])
+
+r=Repo()
+r.get_repo_info()
+
+class Organisation:
+    def __init__(self,locator):
+        self.locator=locator
+
 
 # 1.1. Для обраного проекту формувати графік:
 # 1) за кількістю нових зірочок за період (тиждень\місяць);
