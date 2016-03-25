@@ -12,29 +12,7 @@
 <div class="ct-chart ct-perfect-fourth"></div>
 <script src="../static/bower_components/chartist/dist/chartist.min.js"></script>
 <script>
-    document.getElementById('btn-getstats').onclick = function getStats() {
-        var locator = document.getElementById('locator').getAttribute('value');
-        //alert('btn clicked:' + locator);
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function () {
-            if (xhttp.readyState == 4 && xhttp.status == 200) {
-                console.log('got responce '+xhttp.responseText);
-                //document.getElementById("demo").innerHTML = xhttp.responseText;
-            }
-        };
-        xhttp.open("GET", "http://127.0.0.1:5000/api/", true);
-        xhttp.send();
-    };
-//    var data = {
-//        // A labels array that can contain any sort of values
-//        labels: ['Tue', 'Wed', 'Thu', 'Fri', 'Sat',
-//            'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun', 'Mon', 'Tue'],
-//        // Our series array that contains series objects or in this case series data arrays
-//        series: [
-//            [2, 6, 2, 4, 0, 0, 3, 2, 1, 0, 0, 0, 3, 6, 1]
-//        ]
-//    };
-    var data={};
+    var data = {};
     var options = {
         width: 800,
         height: 400
@@ -43,7 +21,34 @@
     // Create a new line chart object where as first parameter we pass in a selector
     // that is resolving to our chart container element. The Second parameter
     // is the actual data object.
-    new Chartist.Line('.ct-chart', data, options);
+    var c = null; // new Chartist.Line('.ct-chart', data, options);
+    document.getElementById('btn-getstats').onclick = function getStats() {
+        var locator = document.getElementById('locator').getAttribute('value');
+        //alert('btn clicked:' + locator);
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (xhttp.readyState == 4 && xhttp.status == 200) {
+                //console.log('got responce ' + xhttp.responseText);
+
+                data = {
+                    // A labels array that can contain any sort of values
+                    labels: ['Tue', 'Wed', 'Thu', 'Fri', 'Sat',
+                        'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun', 'Mon', 'Tue'],
+                    // Our series array that contains series objects or in this case series data arrays
+                    series: [
+                        [2, 6, 2, 4, 0, 0, 3, 2, 1, 0, 0, 0, 3, 6, 1]
+                    ]
+                };
+                data = JSON.parse(xhttp.responseText);
+                console.log(data);
+                c =  new Chartist.Line('.ct-chart', data, options);
+                //document.getElementById("demo").innerHTML = xhttp.responseText;
+            }
+        };
+        xhttp.open("GET", "http://127.0.0.1:5000/api/", true);
+        xhttp.send();
+    };
+
 </script>
 </body>
 </html>
