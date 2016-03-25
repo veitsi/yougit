@@ -1,3 +1,12 @@
+from flask import jsonify
+
+# chart = {
+#     'labels': ['Tue', 'Wed', 'Thu', 'Fri', 'Sat','Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun', 'Mon', 'Tue'],
+#     'series': [2, 6, 2, 4, 0, 0, 3, 2, 1, 0, 0, 0, 3, 6, 1]
+# }
+t={'labels':[1,2], 'series':[2,3,4]}
+print(jsonify(t))
+
 a = {'url': 'https://api.github.com/repos/yglukhov/nimx/commits/b737dd9510d7faa1b85c4fb23bde3f05a58a34e3',
      'html_url': 'https://github.com/yglukhov/nimx/commit/b737dd9510d7faa1b85c4fb23bde3f05a58a34e3',
      'committer': {'url': 'https://api.github.com/users/yglukhov', 'html_url': 'https://github.com/yglukhov',

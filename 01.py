@@ -1,5 +1,6 @@
 from helpers import *
-import datetime
+import datetime, pickle
+
 
 class Github_user:
     def __init__(self, login='yglukhov'):
@@ -19,33 +20,33 @@ g.get_user_info_by_rest()
 def commit_stat(data):
     assert len(data) > 0
     # days=["Monday","Tuesday","Wednesday","Thursday", "Friday", "Saturday","Sunday"]
-    days=["Mon","Tue","Wed","Thu", "Fri", "Sat","Sun"]
+    days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
     print(type(data[0]['commit']['committer']['date']))
     start_date = date_from_string(data[len(data) - 1]['commit']['committer']['date'])
     end_date = date_from_string(data[0]['commit']['committer']['date'])
-    assert start_date<=end_date
-    date=start_date
-    commits={}
-    while date<=end_date:
-        commits[date]=0
+    assert start_date <= end_date
+    date = start_date
+    commits = {}
+    while date <= end_date:
+        commits[date] = 0
         # print(days[datetime.date.weekday(date)])
-        date+=datetime.timedelta(days=1)
+        date += datetime.timedelta(days=1)
 
     for i in range(len(data)):
-        date=date_from_string(data[i]['commit']['committer']['date'])
-        commits[date]+=1
+        date = date_from_string(data[i]['commit']['committer']['date'])
+        commits[date] += 1
     # for i in commits.values():
     #     print(i)
     # print(commits)
-    points=[]
-    graf_keys=[]
-    while date<=end_date:
+    points = []
+    graf_keys = []
+    while date <= end_date:
         graf_keys.append(days[datetime.date.weekday(date)])
         points.append(commits[date])
         # print(days[datetime.date.weekday(date)], commits[date])
-        date+=datetime.timedelta(days=1)
+        date += datetime.timedelta(days=1)
 
-    return graf_keys,points
+    return graf_keys, points
 
 
 class Repo:
@@ -61,6 +62,8 @@ class Repo:
         # https://api.github.com/yglukhov/nimx as example
         # curl -i "https://api.github.com/repos/show/nimx"
         data = dict_from_rest(url)
+        # pickle.dump(data, open("save.p", "wb"))
+        # data = pickle.load(open("save.p", "rb"))
         # print (date_from_string(data[0]['commit']['committer']['date']))
         # 2016-03-22T09:38:26Z
 
