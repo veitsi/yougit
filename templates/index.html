@@ -6,7 +6,7 @@
           href="static/bower_components/chartist/dist/chartist.min.css">
 </head>
 <body>
-<input type="text" id="locator" value="yglukhov/minx">
+<input type="text" id="locator" value="yglukhov/jnim">
 <input type="button" id="btn-getstats" value="get stats">
 <!--href="{{ url_for('static', filename='img/favicon.ico') }}">-->
 <div class="ct-chart ct-perfect-fourth"></div>
@@ -25,6 +25,7 @@
     document.getElementById('btn-getstats').onclick = function getStats() {
         var locator = document.getElementById('locator').getAttribute('value');
         //alert('btn clicked:' + locator);
+        console.log(locator);
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (xhttp.readyState == 4 && xhttp.status == 200) {
@@ -45,7 +46,7 @@
                 //document.getElementById("demo").innerHTML = xhttp.responseText;
             }
         };
-        xhttp.open("GET", "http://127.0.0.1:5000/api/", true);
+        xhttp.open("GET", "http://127.0.0.1:5000/api/"+locator, true);
         xhttp.send();
     };
 

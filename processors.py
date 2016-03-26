@@ -46,7 +46,7 @@ def commit_stat(data):
         # print(days[datetime.date.weekday(date)], commits[date])
         date += datetime.timedelta(days=1)
 
-    return graf_keys, points
+    return {'labels':graf_keys, 'series':[points]}
 
 
 class Repo:
@@ -61,6 +61,7 @@ class Repo:
               + self.locator + '/commits'
         # https://api.github.com/yglukhov/nimx as example
         # curl -i "https://api.github.com/repos/show/nimx"
+        print('url in get_repo_info '+url)
         data = dict_from_rest(url)
         # pickle.dump(data, open("save.p", "wb"))
         # data = pickle.load(open("save.p", "rb"))
@@ -69,8 +70,7 @@ class Repo:
 
         # for i in range(len(data)):
         #     print (date_from_string(data[i]['commit']['committer']['date']))
-        print(commit_stat(data))
-
+        return (commit_stat(data))
 
 r = Repo()
 r.get_repo_info()
