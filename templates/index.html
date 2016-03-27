@@ -10,22 +10,21 @@
 <input type="button" id="btn-getstats" value="get stats">
 <!--href="{{ url_for('static', filename='img/favicon.ico') }}">-->
 <div class="ct-chart ct-perfect-fourth"></div>
-<script src="../static/bower_components/chartist/dist/chartist.min.js"></script>
+<script src="static/bower_components/chartist/dist/chartist.min.js"></script>
 <script>
     var data = {};
     var options = {
         width: 800,
         height: 400
     };
-
     // Create a new line chart object where as first parameter we pass in a selector
     // that is resolving to our chart container element. The Second parameter
     // is the actual data object.
     var c = null; // new Chartist.Line('.ct-chart', data, options);
     document.getElementById('btn-getstats').onclick = function getStats() {
-        var locator = document.getElementById('locator').getAttribute('value');
+        var locator = document.getElementById('locator').value;
         //alert('btn clicked:' + locator);
-        console.log(locator);
+        console.log('locator after click '+locator);
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (xhttp.readyState == 4 && xhttp.status == 200) {
@@ -46,7 +45,9 @@
                 //document.getElementById("demo").innerHTML = xhttp.responseText;
             }
         };
-        xhttp.open("GET", "http://127.0.0.1:5000/api/"+locator, true);
+        url="http://127.0.0.1:5000/api/"+locator;
+        xhttp.open("GET", url, true);
+        console.log('url after click '+url);
         xhttp.send();
     };
 
