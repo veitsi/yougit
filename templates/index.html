@@ -6,6 +6,11 @@
           href="static/bower_components/chartist/dist/chartist.min.css">
 </head>
 <body>
+<p>Please, print the repository location you want to analyze in format:
+    user_name/repository_name, example yglukhov/nimxor in format
+    organisation_name/repository_name
+    ,example nim-lang/Nim to get statics on last commits by days
+</p>
 <input type="text" id="locator" value="yglukhov/jnim">
 <input type="button" id="btn-getstats" value="get stats">
 <!--href="{{ url_for('static', filename='img/favicon.ico') }}">-->
@@ -24,7 +29,7 @@
     document.getElementById('btn-getstats').onclick = function getStats() {
         var locator = document.getElementById('locator').value;
         //alert('btn clicked:' + locator);
-        console.log('locator after click '+locator);
+        console.log('locator after click ' + locator);
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (xhttp.readyState == 4 && xhttp.status == 200) {
@@ -41,13 +46,13 @@
                 };
                 data = JSON.parse(xhttp.responseText);
                 console.log(data);
-                c =  new Chartist.Line('.ct-chart', data, options);
+                c = new Chartist.Line('.ct-chart', data, options);
                 //document.getElementById("demo").innerHTML = xhttp.responseText;
             }
         };
-        url="http://127.0.0.1:5000/api/"+locator;
+        url = "http://127.0.0.1:5000/api/" + locator;
         xhttp.open("GET", url, true);
-        console.log('url after click '+url);
+        console.log('url after click ' + url);
         xhttp.send();
     };
 
